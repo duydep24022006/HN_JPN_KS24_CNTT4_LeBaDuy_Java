@@ -1,3 +1,4 @@
+package SS3.src;
 import java.util.Scanner;
 
 public class bai5 {

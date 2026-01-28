@@ -1,3 +1,4 @@
+package SS3.src;
 public class bai3 {
     public static void maxQuantityOfBooks(String[] names, int[] quantities){
         int maxQuantities=quantities[0];

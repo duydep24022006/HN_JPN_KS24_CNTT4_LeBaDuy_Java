@@ -1,3 +1,4 @@
+package SS3.src;
 import java.util.Arrays;public class bai6 {
 
     // gộp 2 mảng tăng dần + lọc trùng
