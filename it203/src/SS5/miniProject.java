@@ -34,10 +34,7 @@ public class miniProject {
                 default:
                     System.out.println("lựa chọn không hợp lệ.");
             }
-            if (choice != 0) {
-                System.out.println("\nnhấn enter để quay lại menu...");
-                sc.nextLine();
-            }
+
         } while (choice != 0);
         sc.close();
     }
@@ -124,21 +121,32 @@ public class miniProject {
 
     static void runValidPalindrome() {
         System.out.print("nhập chuỗi: ");
-        String s = sc.nextLine();
-        if (s.trim().isEmpty()) s = "A man, a plan, a canal: Panama";
-        String cleaned = s.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
-        int l = 0, r = cleaned.length() - 1;
-        boolean ok = true;
-        while (l < r) {
-            if (cleaned.charAt(l) != cleaned.charAt(r)) {
-                ok = false;
+        String input = sc.nextLine();
+
+        if (input.trim().isEmpty()) {
+            System.out.println("false");
+            return;
+        }
+
+        String cleaned = input.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
+
+        int left = 0;
+        int right = cleaned.length() - 1;
+
+        boolean isPalindrome = true;
+
+        while (left < right) {
+            if (cleaned.charAt(left) != cleaned.charAt(right)) {
+                isPalindrome = false;
                 break;
             }
-            l++;
-            r--;
+            left++;
+            right--;
         }
-        System.out.println(ok);
+
+        System.out.println(isPalindrome);
     }
+
 
     static void runReverseWords() {
         System.out.print("nhập chuỗi: ");
