@@ -14,19 +14,19 @@ public class miniProject {
             choice = readInteger("chọn chức năng: ");
             switch (choice) {
                 case 1:
-                    runTwoSum();
+                    twoSum();
                     break;
                 case 2:
-                    runMoveZeroes();
+                    moveZeroes();
                     break;
                 case 3:
-                    runValidPalindrome();
+                    validPalindrome();
                     break;
                 case 4:
-                    runReverseWords();
+                    reverseWords();
                     break;
                 case 5:
-                    runHappyNumber();
+                    happyNumber();
                     break;
                 case 0:
                     System.out.println("thoát chương trình.");
@@ -34,7 +34,6 @@ public class miniProject {
                 default:
                     System.out.println("lựa chọn không hợp lệ.");
             }
-
         } while (choice != 0);
         sc.close();
     }
@@ -48,44 +47,36 @@ public class miniProject {
         System.out.println("3. Kiểm tra chuỗi đối xứng (Valid Palindrome)");
         System.out.println("4. Đảo ngược từ trong câu (Reverse Words)");
         System.out.println("5. Số hạnh phúc (Happy Number)");
-        System.out.println("0. thoát");
+        System.out.println("0. Thoát");
         System.out.println("----------------------------------------");
     }
 
     static int readInteger(String prompt) {
         while (true) {
             System.out.print(prompt);
-            String s = sc.nextLine().trim();
             try {
-                return Integer.parseInt(s);
+                return Integer.parseInt(sc.nextLine().trim());
             } catch (Exception e) {
                 System.out.println("vui lòng nhập số.");
             }
         }
     }
 
-    static int[] readIntArray() {
-        System.out.println("nhập mảng số nguyên (vd: 1 2 3 0 4 hoặc 1,2,3,0,4). để trống dùng mẫu.");
-        System.out.print("arr = ");
+    // ================= CASE 1 =================
+    static void twoSum() {
+        System.out.print("nhập mảng (vd: 1 2 3 4): ");
         String line = sc.nextLine().trim();
-        if (line.isEmpty()) return new int[]{2, 7, 11, 15, 0, 3, 0, 4};
-        line = line.replaceAll(",", " ");
+        if (line.isEmpty()) line = "2 7 11 15";
+
         String[] parts = line.split("\\s+");
         int[] arr = new int[parts.length];
         for (int i = 0; i < parts.length; i++) {
             arr[i] = Integer.parseInt(parts[i]);
         }
-        return arr;
-    }
 
-    static void printArray(int[] arr) {
-        System.out.println(Arrays.toString(arr));
-    }
-
-    static void runTwoSum() {
-        int[] arr = readIntArray();
         int target = readInteger("nhập target = ");
         int iFound = -1, jFound = -1;
+
         for (int i = 0; i < arr.length; i++) {
             for (int j = i + 1; j < arr.length; j++) {
                 if (arr[i] + arr[j] == target) {
@@ -96,7 +87,8 @@ public class miniProject {
             }
             if (iFound != -1) break;
         }
-        printArray(arr);
+
+        System.out.println(Arrays.toString(arr));
         if (iFound == -1) {
             System.out.println("không tìm thấy.");
         } else {
@@ -104,9 +96,18 @@ public class miniProject {
         }
     }
 
-    static void runMoveZeroes() {
-        int[] arr = readIntArray();
-        printArray(arr);
+    // ================= CASE 2 =================
+    static void moveZeroes() {
+        System.out.print("nhập mảng (vd: 1 0 3 0 4): ");
+        String line = sc.nextLine().trim();
+        if (line.isEmpty()) line = "0 1 0 3 12";
+
+        String[] parts = line.split("\\s+");
+        int[] arr = new int[parts.length];
+        for (int i = 0; i < parts.length; i++) {
+            arr[i] = Integer.parseInt(parts[i]);
+        }
+
         int pos = 0;
         for (int i = 0; i < arr.length; i++) {
             if (arr[i] != 0) {
@@ -116,76 +117,73 @@ public class miniProject {
                 pos++;
             }
         }
-        printArray(arr);
+
+        System.out.println(Arrays.toString(arr));
     }
 
-    static void runValidPalindrome() {
+    // ================= CASE 3 =================
+    static void validPalindrome() {
         System.out.print("nhập chuỗi: ");
         String input = sc.nextLine();
 
         if (input.trim().isEmpty()) {
-            System.out.println("false");
+            System.out.println(false);
             return;
         }
 
         String cleaned = input.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
 
-        int left = 0;
-        int right = cleaned.length() - 1;
-
-        boolean isPalindrome = true;
+        int left = 0, right = cleaned.length() - 1;
+        boolean ok = true;
 
         while (left < right) {
             if (cleaned.charAt(left) != cleaned.charAt(right)) {
-                isPalindrome = false;
+                ok = false;
                 break;
             }
             left++;
             right--;
         }
 
-        System.out.println(isPalindrome);
+        System.out.println(ok);
     }
 
-
-    static void runReverseWords() {
+    // ================= CASE 4 =================
+    static void reverseWords() {
         System.out.print("nhập chuỗi: ");
         String s = sc.nextLine();
         if (s.trim().isEmpty()) s = "  world   hello  ";
-        String trimmed = s.trim();
-        if (trimmed.isEmpty()) {
-            System.out.println("");
-            return;
-        }
-        String[] words = trimmed.split("\\s+");
-        StringBuilder sb = new StringBuilder();
+
+        String[] words = s.trim().split("\\s+");
+        String result = "";
+
         for (int i = words.length - 1; i >= 0; i--) {
-            sb.append(words[i]);
-            if (i != 0) sb.append(" ");
+            result += words[i];
+            if (i != 0) result += " ";
         }
-        System.out.println(sb.toString());
+
+        System.out.println(result);
     }
 
-    static void runHappyNumber() {
+    // ================= CASE 5 =================
+    static void happyNumber() {
         int n = readInteger("nhập n = ");
         if (n <= 0) {
-            System.out.println("false");
+            System.out.println(false);
             return;
         }
+
         int cur = n;
         while (cur != 1 && cur != 4) {
-            cur = sumSquareDigits(cur);
+            int sum = 0;
+            while (cur > 0) {
+                int d = cur % 10;
+                sum += d * d;
+                cur /= 10;
+            }
+            cur = sum;
         }
-        System.out.println(cur == 1);
-    }
 
-    static int sumSquareDigits(int x) {
-        int sum = 0;
-        while (x > 0) {
-            int d = x % 10;
-            sum += d * d;
-            x /= 10;
-        }
-        return sum;
+        System.out.println(cur == 1);
     }
 }
