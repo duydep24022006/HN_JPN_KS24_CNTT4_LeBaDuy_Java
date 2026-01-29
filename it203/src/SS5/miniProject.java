@@ -1,6 +1,7 @@
 package SS5;
-import java.util.*;
-import java.util.regex.Pattern;
+
+import java.util.Arrays;
+import java.util.Scanner;
 
 public class miniProject {
 
@@ -8,66 +9,60 @@ public class miniProject {
 
     public static void main(String[] args) {
         int choice;
-
         do {
-            printMenu();
-            choice = readInt("chọn chức năng: ");
-
+            showMenu();
+            choice = readInteger("chọn chức năng: ");
             switch (choice) {
                 case 1:
-                    fr1TwoSum();
+                    runTwoSum();
                     break;
                 case 2:
-                    fr2MoveZeroes();
+                    runMoveZeroes();
                     break;
                 case 3:
-                    fr3ValidPalindrome();
+                    runValidPalindrome();
                     break;
                 case 4:
-                    fr4ReverseWords();
+                    runReverseWords();
                     break;
                 case 5:
-                    fr5HappyNumber();
+                    runHappyNumber();
                     break;
                 case 0:
                     System.out.println("thoát chương trình.");
                     break;
                 default:
-                    System.out.println("lỗi: lựa chọn không hợp lệ, vui lòng chọn 0-5.");
+                    System.out.println("lựa chọn không hợp lệ.");
             }
-
             if (choice != 0) {
                 System.out.println("\nnhấn enter để quay lại menu...");
                 sc.nextLine();
             }
-
         } while (choice != 0);
-
         sc.close();
     }
 
-
-    static void printMenu() {
+    static void showMenu() {
         System.out.println("========================================");
         System.out.println("                 MENU ");
         System.out.println("========================================");
-        System.out.println("1. [fr1] two sum (tìm cặp tổng bằng k)");
-        System.out.println("2. [fr2] move zeroes (dồn số 0 về cuối)");
-        System.out.println("3. [fr3] valid palindrome (chuỗi đối xứng + regex)");
-        System.out.println("4. [fr4] reverse words (đảo ngược từ trong câu)");
-        System.out.println("5. [fr5] happy number (số hạnh phúc)");
+        System.out.println("1. Tìm cặp số có tổng bằng K (Two Sum)");
+        System.out.println("2. Dồn số 0 về cuối (Move Zeroes)");
+        System.out.println("3. Kiểm tra chuỗi đối xứng (Valid Palindrome)");
+        System.out.println("4. Đảo ngược từ trong câu (Reverse Words)");
+        System.out.println("5. Số hạnh phúc (Happy Number)");
         System.out.println("0. thoát");
         System.out.println("----------------------------------------");
     }
 
-    static int readInt(String prompt) {
+    static int readInteger(String prompt) {
         while (true) {
             System.out.print(prompt);
             String s = sc.nextLine().trim();
             try {
                 return Integer.parseInt(s);
-            } catch (NumberFormatException e) {
-                System.out.println("lỗi: vui lòng nhập số nguyên.");
+            } catch (Exception e) {
+                System.out.println("vui lòng nhập số.");
             }
         }
     }
@@ -76,15 +71,10 @@ public class miniProject {
         System.out.println("nhập mảng số nguyên (vd: 1 2 3 0 4 hoặc 1,2,3,0,4). để trống dùng mẫu.");
         System.out.print("arr = ");
         String line = sc.nextLine().trim();
-
-        if (line.isEmpty()) {
-            return new int[]{2, 7, 11, 15, 0, 3, 0, 4};
-        }
-
+        if (line.isEmpty()) return new int[]{2, 7, 11, 15, 0, 3, 0, 4};
         line = line.replaceAll(",", " ");
-        String[] parts = line.trim().split("\\s+");
+        String[] parts = line.split("\\s+");
         int[] arr = new int[parts.length];
-
         for (int i = 0; i < parts.length; i++) {
             arr[i] = Integer.parseInt(parts[i]);
         }
@@ -95,45 +85,31 @@ public class miniProject {
         System.out.println(Arrays.toString(arr));
     }
 
-
-    static void fr1TwoSum() {
-        System.out.println("\n[fr1] two sum");
+    static void runTwoSum() {
         int[] arr = readIntArray();
-        int target = readInt("nhập target = ");
-
-        Map<Integer, Integer> map = new HashMap<>();
+        int target = readInteger("nhập target = ");
         int iFound = -1, jFound = -1;
-
         for (int i = 0; i < arr.length; i++) {
-            int need = target - arr[i];
-            if (map.containsKey(need)) {
-                iFound = map.get(need);
-                jFound = i;
-                break;
+            for (int j = i + 1; j < arr.length; j++) {
+                if (arr[i] + arr[j] == target) {
+                    iFound = i;
+                    jFound = j;
+                    break;
+                }
             }
-            map.put(arr[i], i);
+            if (iFound != -1) break;
         }
-
-        System.out.print("mảng: ");
         printArray(arr);
-
         if (iFound == -1) {
-            System.out.println("không tìm thấy cặp chỉ số thỏa mãn.");
+            System.out.println("không tìm thấy.");
         } else {
-            System.out.println("tìm thấy: i = " + iFound + ", j = " + jFound
-                    + " (arr[i] + arr[j] = " + arr[iFound] + " + " + arr[jFound] + ")");
+            System.out.println("i = " + iFound + ", j = " + jFound);
         }
     }
 
-
-    static void fr2MoveZeroes() {
-        System.out.println("\n[fr2] move zeroes");
+    static void runMoveZeroes() {
         int[] arr = readIntArray();
-
-        System.out.print("trước: ");
         printArray(arr);
-
-        // two pointers: pos là vị trí đặt số khác 0
         int pos = 0;
         for (int i = 0; i < arr.length; i++) {
             if (arr[i] != 0) {
@@ -143,26 +119,14 @@ public class miniProject {
                 pos++;
             }
         }
-
-        System.out.print("sau  : ");
         printArray(arr);
     }
 
-
-    static void fr3ValidPalindrome() {
-        System.out.println("\n[fr3] valid palindrome");
-        System.out.println("nhập câu (để trống dùng mẫu: \"A man, a plan, a canal: Panama\").");
-        System.out.print("s = ");
+    static void runValidPalindrome() {
+        System.out.print("nhập chuỗi: ");
         String s = sc.nextLine();
-
-        if (s.trim().isEmpty()) {
-            s = "A man, a plan, a canal: Panama";
-        }
-
-
+        if (s.trim().isEmpty()) s = "A man, a plan, a canal: Panama";
         String cleaned = s.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
-
-        // two pointers kiểm tra đối xứng
         int l = 0, r = cleaned.length() - 1;
         boolean ok = true;
         while (l < r) {
@@ -173,59 +137,38 @@ public class miniProject {
             l++;
             r--;
         }
-
-        System.out.println("chuỗi gốc   : " + s);
-        System.out.println("sau làm sạch: " + cleaned);
-        System.out.println("kết quả     : " + ok);
+        System.out.println(ok);
     }
 
-
-    static void fr4ReverseWords() {
-        System.out.println("\n[fr4] reverse words");
-        System.out.println("nhập chuỗi (có thể dư khoảng trắng). để trống dùng mẫu: \"  world   hello  \".");
-        System.out.print("s = ");
+    static void runReverseWords() {
+        System.out.print("nhập chuỗi: ");
         String s = sc.nextLine();
-
-        if (s.trim().isEmpty()) {
-            s = "  world   hello  ";
-        }
-
+        if (s.trim().isEmpty()) s = "  world   hello  ";
         String trimmed = s.trim();
         if (trimmed.isEmpty()) {
-            System.out.println("chuỗi chỉ có khoảng trắng -> kết quả: \"\"");
+            System.out.println("");
             return;
         }
-
         String[] words = trimmed.split("\\s+");
         StringBuilder sb = new StringBuilder();
-
         for (int i = words.length - 1; i >= 0; i--) {
             sb.append(words[i]);
             if (i != 0) sb.append(" ");
         }
-
-        System.out.println("chuỗi gốc : \"" + s + "\"");
-        System.out.println("kết quả  : \"" + sb.toString() + "\"");
+        System.out.println(sb.toString());
     }
 
-
-    static void fr5HappyNumber() {
-        System.out.println("\n[fr5] happy number");
-        int n = readInt("nhập n (số dương) = ");
+    static void runHappyNumber() {
+        int n = readInteger("nhập n = ");
         if (n <= 0) {
-            System.out.println("lỗi: n phải > 0");
+            System.out.println("false");
             return;
         }
-
-        Set<Integer> seen = new HashSet<>();
         int cur = n;
-
-        while (cur != 1 && !seen.contains(cur)) {
-            seen.add(cur);
+        while (cur != 1 && cur != 4) {
             cur = sumSquareDigits(cur);
         }
-
-        System.out.println(n + (cur == 1 ? " là số hạnh phúc (true)" : " không là số hạnh phúc (false)"));
+        System.out.println(cur == 1);
     }
 
     static int sumSquareDigits(int x) {
