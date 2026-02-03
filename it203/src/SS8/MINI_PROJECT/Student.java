@@ -40,7 +40,6 @@ public class Student {
         }
     }
 
-    // ===== getters =====
     public String getId() { return id; }
     public String getName() { return name; }
     public int getAge() { return age; }
@@ -51,7 +50,6 @@ public class Student {
     public double getAverage() { return average; }
     public String getRank() { return rank; }
 
-    // ===== setters (không cho đổi id) =====
     public void setName(String name) { this.name = name; }
     public void setAge(int age) { this.age = age; }
     public void setGender(String gender) { this.gender = gender; }
