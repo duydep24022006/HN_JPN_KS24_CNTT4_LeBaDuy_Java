@@ -4,7 +4,6 @@ public class StudentManager {
     private Student[] students = new Student[100];
     private int count = 0;
 
-    /* ===== FR1: thêm sinh viên ===== */
     public boolean addStudent(Student s) {
         if (count == students.length) return false;
         if (findById(s.getId()) != null) return false;
@@ -13,25 +12,25 @@ public class StudentManager {
         return true;
     }
 
-    /* ===== FR2: hiển thị ===== */
     public void showAll() {
         if (count == 0) {
             System.out.println("Danh sách rỗng!");
             return;
         }
 
-        System.out.printf("%-8s %-20s %-5s %-8s %-6s %-6s %-6s %-6s %-10s%n",
+        System.out.printf("%-8s | %-20s | %-4s | %-7s | %-4s | %-4s | %-4s | %-5s | %-10s%n",
                 "ID", "Tên", "Tuổi", "GT", "Toán", "Lý", "Hóa", "TB", "Xếp loại");
+        System.out.println("--------------------------------------------------------------------------------");
+
         for (int i = 0; i < count; i++) {
             System.out.println(students[i]);
         }
     }
 
-    /* ===== FR3: tìm kiếm ===== */
     public Student findById(String id) {
-        for (int i = 0; i < count; i++)
-            if (students[i].getId().equalsIgnoreCase(id))
-                return students[i];
+        for (int i = 0; i < count; i++) {
+            if (students[i].getId().equalsIgnoreCase(id)) return students[i];
+        }
         return null;
     }
 
@@ -46,12 +45,23 @@ public class StudentManager {
         if (!found) System.out.println("Không tìm thấy!");
     }
 
-    /* ===== FR5: xóa ===== */
+    public void findByRank(String rankKey) {
+        boolean found = false;
+        for (int i = 0; i < count; i++) {
+            if (students[i].getRank().equalsIgnoreCase(rankKey)) {
+                System.out.println(students[i]);
+                found = true;
+            }
+        }
+        if (!found) System.out.println("Không tìm thấy!");
+    }
+
     public boolean deleteById(String id) {
         for (int i = 0; i < count; i++) {
             if (students[i].getId().equalsIgnoreCase(id)) {
-                for (int j = i; j < count - 1; j++)
+                for (int j = i; j < count - 1; j++) {
                     students[j] = students[j + 1];
+                }
                 students[--count] = null;
                 return true;
             }
@@ -59,30 +69,46 @@ public class StudentManager {
         return false;
     }
 
-    /* ===== FR7: sắp xếp ===== */
+    public boolean updateById(String id, String newName, int newAge, String newGender,
+                              double newMath, double newPhysics, double newChemistry) {
+        Student s = findById(id);
+        if (s == null) return false;
+
+        s.setName(newName);
+        s.setAge(newAge);
+        s.setGender(newGender);
+        s.setMath(newMath);
+        s.setPhysics(newPhysics);
+        s.setChemistry(newChemistry);
+        return true;
+    }
+
     public void sortByAverageDesc() {
-        for (int i = 0; i < count - 1; i++)
-            for (int j = i + 1; j < count; j++)
+        for (int i = 0; i < count - 1; i++) {
+            for (int j = i + 1; j < count; j++) {
                 if (students[i].getAverage() < students[j].getAverage()) {
                     Student tmp = students[i];
                     students[i] = students[j];
                     students[j] = tmp;
                 }
+            }
+        }
     }
 
     public void sortByNameAZ() {
         for (int i = 0; i < count - 1; i++) {
             int min = i;
-            for (int j = i + 1; j < count; j++)
-                if (students[j].getName().compareToIgnoreCase(students[min].getName()) < 0)
+            for (int j = i + 1; j < count; j++) {
+                if (students[j].getName().compareToIgnoreCase(students[min].getName()) < 0) {
                     min = j;
+                }
+            }
             Student tmp = students[i];
             students[i] = students[min];
             students[min] = tmp;
         }
     }
 
-    /* ===== FR8: thống kê ===== */
     public void statistic() {
         int gioi = 0, kha = 0, tb = 0, yeu = 0;
         double sum = 0;
@@ -104,4 +130,3 @@ public class StudentManager {
         System.out.printf("Điểm TB chung: %.2f%n", count == 0 ? 0 : sum / count);
     }
 }
-
