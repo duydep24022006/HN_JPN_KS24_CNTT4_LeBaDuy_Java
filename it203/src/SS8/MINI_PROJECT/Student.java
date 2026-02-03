@@ -1,7 +1,7 @@
 package SS8.MINI_PROJECT;
 
 public class Student {
-    private final String id;        // không cho đổi mã SV
+    private String id;
     private String name;
     private int age;
     private String gender;
@@ -10,6 +10,9 @@ public class Student {
     private double chemistry;
     private double average;
     private String rank;
+
+    public Student() {
+    }
 
     public Student(String id, String name, int age, String gender,
                    double math, double physics, double chemistry) {
@@ -20,11 +23,11 @@ public class Student {
         this.math = math;
         this.physics = physics;
         this.chemistry = chemistry;
-        recalc();
+        calculateAverageAndRank();
     }
 
-    public void recalc() {
-        average = (math + physics + chemistry) / 3;
+    public void calculateAverageAndRank() {
+        this.average = (math + physics + chemistry) / 3;
 
         if (average >= 8.0 && math >= 6.5 && physics >= 6.5 && chemistry >= 6.5) {
             rank = "Giỏi";
@@ -37,7 +40,6 @@ public class Student {
         }
     }
 
-    // ===== getters =====
     public String getId() { return id; }
     public String getName() { return name; }
     public int getAge() { return age; }
@@ -48,14 +50,24 @@ public class Student {
     public double getAverage() { return average; }
     public String getRank() { return rank; }
 
-    // ===== setters (không có setId) =====
     public void setName(String name) { this.name = name; }
     public void setAge(int age) { this.age = age; }
     public void setGender(String gender) { this.gender = gender; }
 
-    public void setMath(double math) { this.math = math; recalc(); }
-    public void setPhysics(double physics) { this.physics = physics; recalc(); }
-    public void setChemistry(double chemistry) { this.chemistry = chemistry; recalc(); }
+    public void setMath(double math) {
+        this.math = math;
+        calculateAverageAndRank();
+    }
+
+    public void setPhysics(double physics) {
+        this.physics = physics;
+        calculateAverageAndRank();
+    }
+
+    public void setChemistry(double chemistry) {
+        this.chemistry = chemistry;
+        calculateAverageAndRank();
+    }
 
     @Override
     public String toString() {
