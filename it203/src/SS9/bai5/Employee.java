@@ -7,11 +7,18 @@ public class Employee {
         this.name = name;
     }
 
-    public abstract double calculateSalary();
+    // method chung, lớp con sẽ override
+    public double calculateSalary() {
+        return 0;
+    }
 
-    public abstract String getRole();
+    public String getRole() {
+        return "Employee";
+    }
 
-    public abstract String getSalaryDetail();
+    public String getSalaryDetail() {
+        return "";
+    }
 
     public String getName() {
         return name;
