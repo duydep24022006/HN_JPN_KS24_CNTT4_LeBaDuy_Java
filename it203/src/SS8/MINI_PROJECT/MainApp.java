@@ -37,6 +37,8 @@ public class MainApp {
                 case 9:
                     System.out.println("Thoát chương trình!");
                     break;
+                default:
+
             }
         } while (choice != 9);
     }
