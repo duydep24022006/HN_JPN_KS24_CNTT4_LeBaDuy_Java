@@ -1,6 +1,6 @@
 package SS9.bai1;
 
-public class Student {
+public class Student extends Person {
     private String studentId;
     private double gpa;
 
@@ -12,7 +12,7 @@ public class Student {
 
     @Override
     public void displayInfo() {
-        super.displayInfo(); // dùng lại phương thức của Person
+        super.displayInfo();
         System.out.println("Mã sinh viên: " + studentId);
         System.out.println("Điểm trung bình: " + gpa);
     }

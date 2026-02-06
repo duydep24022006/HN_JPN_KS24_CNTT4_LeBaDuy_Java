@@ -8,7 +8,6 @@ public class Main {
                 "SV001",
                 3.5
         );
-
         student.displayInfo();
     }
 }
