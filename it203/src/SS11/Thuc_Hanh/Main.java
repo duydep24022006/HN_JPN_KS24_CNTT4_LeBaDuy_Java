@@ -17,7 +17,6 @@ public class Main {
 
                 System.out.println("Thanh tien: " + drinks[i].calculatePrice());
 
-                // kiểm tra nếu object có implements IMixable
                 if (drinks[i] instanceof IMixable) {
                     IMixable m = (IMixable) drinks[i];
                     m.mix();

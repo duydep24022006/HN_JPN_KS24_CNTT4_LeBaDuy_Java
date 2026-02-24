@@ -4,7 +4,7 @@ public class Coffee extends Drink {
     private boolean hasMilk;
 
     public Coffee(String id, String name, double price, boolean hasMilk) {
-        super(id, name, price);   // gọi constructor lớp cha
+        super(id, name, price);
         this.hasMilk = hasMilk;
     }
 
@@ -19,7 +19,7 @@ public class Coffee extends Drink {
 
     @Override
     public void displayInfo() {
-        super.displayInfo();  // gọi phương thức lớp cha
+        super.displayInfo();
 
         if (hasMilk == true) {
             System.out.println("Loai: Co sua");
